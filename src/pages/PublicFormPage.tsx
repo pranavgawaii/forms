@@ -131,26 +131,21 @@ const PublicFormPage = () => {
     const error = publicFormQuery.error as Error;
     return (
       <div className="flex min-h-screen items-center justify-center px-4 bg-dotted flex-col gap-6">
-        <div className="w-full max-w-lg rounded-3xl p-8 text-center bg-white shadow-xl border border-black/5">
-          <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-red-50 text-red-600 shadow-sm border border-red-100">
-            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" /><line x1="12" y1="9" x2="12" y2="13" /><line x1="12" y1="17" x2="12.01" y2="17" /></svg>
+        <div className="w-full max-w-lg rounded-3xl p-10 text-center bg-white shadow-xl border border-black/5 animate-in fade-in zoom-in duration-300">
+          <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-zinc-50 text-zinc-400 shadow-sm border border-black/5">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
           </div>
           <h1 className="brand-heading text-2xl font-bold text-ink-900">Form not available</h1>
-          <p className="mt-3 text-sm text-ink-600">
+          <p className="mt-4 text-sm leading-relaxed text-ink-600">
             {error?.message || "This form is unavailable, closed, or the link is invalid."}
           </p>
-          <div className="mt-8">
-            <a href="/app/forms" className="inline-flex items-center justify-center px-6 py-2.5 text-sm font-semibold text-white bg-black rounded-xl hover:bg-zinc-800 transition-colors">Back to Dashboard</a>
-          </div>
-        </div>
-        <div className="w-full max-w-lg p-4 bg-white/80 backdrop-blur-md rounded-2xl border border-black/5 text-[10px] font-mono text-zinc-500 overflow-hidden shadow-sm">
-          <p className="font-bold mb-1 uppercase tracking-widest text-zinc-400">System Debug Info</p>
-          <div className="grid grid-cols-2 gap-2">
-            <div><span className="opacity-60">Slug:</span> {slug}</div>
-            <div><span className="opacity-60">Status:</span> {publicFormQuery.status}</div>
-            <div><span className="opacity-60">HasData:</span> {String(!!publicFormQuery.data)}</div>
-            <div><span className="opacity-60">Error:</span> {error?.name || 'none'}</div>
-          </div>
+          {user && (
+            <div className="mt-10">
+              <a href="/app/forms" className="inline-flex items-center justify-center px-8 py-3 text-xs font-bold uppercase tracking-widest text-white bg-zinc-950 rounded-xl hover:bg-zinc-800 transition-all active:scale-[0.98]">
+                Back to Dashboard
+              </a>
+            </div>
+          )}
         </div>
       </div>
     );

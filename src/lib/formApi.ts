@@ -267,29 +267,33 @@ export const getPublicFormBySlug = async (slug: string) => {
   const { data: { session } } = await supabase.auth.getSession();
   const userId = session?.user?.id;
 
-  // 2. Define the query based on authentication status
-  let query = supabase.from('forms').select('*').eq('slug', slug);
-
-  // If not logged in, strict filtering applies immediately to ensure we find the public form
-  // even if RLS is open or misconfigured, and to match the 'anon' expectation.
-  if (!userId) {
-    query = query.eq('is_public', true).eq('status', 'live');
-  }
-
-  const { data: formData, error: formError } = await query.single();
+  // 2. Fetch the form by slug (broadly)
+  const { data: formData, error: formError } = await supabase
+    .from('forms')
+    .select('*')
+    .eq('slug', slug)
+    .single();
 
   if (formError) {
-    console.error('getPublicFormBySlug Error:', formError);
-    // If we are logged in but tried to view a non-existent or inaccessible form
+    if (formError.code === 'PGRST116') {
+      throw new Error('This form does not exist or the link is invalid.');
+    }
     throw formError;
   }
 
-  // 3. Double-check access (Redundant for anon due to query filters, but critical for Owners viewing drafts)
+  // 3. Check access and status
   const isOwner = userId && formData.owner_id === userId;
-  const isPubliclyAccessible = formData.status === 'live' && formData.is_public;
 
-  if (!isOwner && !isPubliclyAccessible) {
-    throw new Error('Form not available (Private or Draft)');
+  if (!isOwner) {
+    if (!formData.is_public) {
+      throw new Error('This form is private and only accessible to the owner.');
+    }
+    if (formData.status === 'closed') {
+      throw new Error('This form is no longer accepting responses (Closed).');
+    }
+    if (formData.status !== 'live') {
+      throw new Error('This form is currently unavailable (Draft mode).');
+    }
   }
 
   // 4. Load Fields
