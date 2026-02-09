@@ -2,7 +2,6 @@ import { FormEvent, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import { useAuth } from '../context/AuthContext';
-import { cn } from '../lib/utils';
 
 const AuthPage = () => {
   const [email, setEmail] = useState('');
