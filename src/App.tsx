@@ -5,7 +5,6 @@ import AccountPage from './pages/AccountPage';
 import AuthPage from './pages/AuthPage';
 import FormBuilderPage from './pages/FormBuilderPage';
 import FormsListPage from './pages/FormsListPage';
-import LandingPage from './pages/LandingPage';
 import NotFoundPage from './pages/NotFoundPage';
 import PublicFormPage from './pages/PublicFormPage';
 import ResponsesPage from './pages/ResponsesPage';
@@ -16,8 +15,8 @@ const App = () => {
   return (
     <ErrorBoundary>
       <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/auth" element={<AuthPage />} />
+        <Route path="/" element={<AuthPage />} />
+        <Route path="/auth" element={<Navigate to="/" replace />} />
         <Route path="/f/:slug" element={<PublicFormPage />} />
 
         <Route

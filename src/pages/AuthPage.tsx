@@ -2,14 +2,11 @@ import { FormEvent, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import { useAuth } from '../context/AuthContext';
-
-type AuthTab = 'login' | 'register';
+import { cn } from '../lib/utils';
 
 const AuthPage = () => {
-  const [tab, setTab] = useState<AuthTab>('login');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [fullName, setFullName] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
@@ -45,128 +42,80 @@ const AuthPage = () => {
     setSuccess('Login successful. Redirecting...');
   };
 
-  const handleRegister = async (event: FormEvent) => {
-    event.preventDefault();
-    resetMessages();
-    setSubmitting(true);
-
-    const { data, error: signUpError } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        data: {
-          full_name: fullName,
-        },
-      },
-    });
-
-    if (signUpError) {
-      setSubmitting(false);
-      setError(signUpError.message);
-      return;
-    }
-
-    if (data.user) {
-      await supabase.from('users_profile').upsert({
-        id: data.user.id,
-        full_name: fullName,
-      });
-    }
-
-    setSubmitting(false);
-
-    if (data.session) {
-      setSuccess('Account created. Redirecting...');
-      return;
-    }
-
-    setSuccess('Account created. Check your inbox to verify your email, then login.');
-    setTab('login');
-  };
-
   return (
-    <div className="flex min-h-screen items-center justify-center px-4 py-10">
-      <div className="premium-panel w-full max-w-md rounded-3xl p-6">
-        <div className="mb-6 flex justify-center">
-           <img src="/mitadt_logo.png" alt="MIT ADT Logo" className="h-24 w-auto drop-shadow-sm" />
-        </div>
-        <p className="text-center text-xs font-semibold uppercase tracking-[0.16em] text-brand-700">Placement Operations Suite</p>
-        <h1 className="brand-heading mt-2 text-center text-3xl font-semibold text-ink-900">PlacePro- MIT ADT</h1>
-        <p className="mt-2 text-center text-sm text-ink-600">Sign in to create polished forms and manage campus responses.</p>
+    <div className="flex min-h-screen items-center justify-center bg-[#fafafa] bg-dotted px-4">
+      <div className="w-full max-w-md overflow-hidden rounded-3xl bg-white shadow-2xl shadow-zinc-200/50 border border-black/5 animate-in fade-in slide-in-from-bottom-4 duration-700">
+        <div className="p-8 sm:p-12">
+          <div className="mb-8 flex justify-center">
+            <img src="/mitadt_logo.png" alt="MIT ADT Logo" className="h-16 w-auto object-contain" />
+          </div>
 
-        <div className="mt-6 grid grid-cols-2 rounded-xl border border-ink-100 bg-white/80 p-1 text-sm font-semibold">
-          <button
-            type="button"
-            onClick={() => {
-              setTab('login');
-              resetMessages();
-            }}
-            className={`rounded-lg px-3 py-2 transition ${tab === 'login' ? 'bg-ink-900 text-white shadow-soft' : 'text-ink-500 hover:text-ink-700'}`}
-          >
-            Login
-          </button>
-          <button
-            type="button"
-            onClick={() => {
-              setTab('register');
-              resetMessages();
-            }}
-            className={`rounded-lg px-3 py-2 transition ${tab === 'register' ? 'bg-ink-900 text-white shadow-soft' : 'text-ink-500 hover:text-ink-700'}`}
-          >
-            Register
-          </button>
-        </div>
+          <div className="text-center mb-10">
+            <h1 className="brand-heading text-2xl font-extrabold text-ink-900 tracking-tight">
+              PlacePro
+            </h1>
+            <p className="mt-2 text-xs font-bold uppercase tracking-[0.2em] text-zinc-400">
+              MIT ADT UNIVERSITY (CN-CRTP)
+            </p>
+          </div>
 
-        <form onSubmit={tab === 'login' ? handleLogin : handleRegister} className="mt-5 space-y-4">
-          {tab === 'register' ? (
-            <label className="block">
-              <span className="mb-1 block text-sm font-semibold text-ink-700">Full name</span>
+          <form onSubmit={handleLogin} className="space-y-6">
+            <div>
+              <label className="block text-[10px] font-bold uppercase tracking-wider text-zinc-500 mb-2 ml-1">
+                Academic Email
+              </label>
               <input
                 required
-                value={fullName}
-                onChange={(event) => setFullName(event.target.value)}
-                className="premium-input w-full px-3 py-2.5 text-sm"
-                placeholder="Dr. Aditi Kulkarni"
+                type="email"
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+                className="w-full h-[42px] px-4 text-sm bg-zinc-50 border border-black/5 rounded-xl focus:outline-none focus:ring-2 focus:ring-black/5 transition-all placeholder:text-zinc-300"
+                placeholder="teacher@college.edu"
               />
-            </label>
-          ) : null}
+            </div>
 
-          <label className="block">
-            <span className="mb-1 block text-sm font-semibold text-ink-700">Email</span>
-            <input
-              required
-              type="email"
-              value={email}
-              onChange={(event) => setEmail(event.target.value)}
-              className="premium-input w-full px-3 py-2.5 text-sm"
-              placeholder="teacher@college.edu"
-            />
-          </label>
+            <div>
+              <label className="block text-[10px] font-bold uppercase tracking-wider text-zinc-500 mb-2 ml-1">
+                Password
+              </label>
+              <input
+                required
+                minLength={6}
+                type="password"
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
+                className="w-full h-[42px] px-4 text-sm bg-zinc-50 border border-black/5 rounded-xl focus:outline-none focus:ring-2 focus:ring-black/5 transition-all placeholder:text-zinc-300"
+                placeholder="••••••••"
+              />
+            </div>
 
-          <label className="block">
-            <span className="mb-1 block text-sm font-semibold text-ink-700">Password</span>
-            <input
-              required
-              minLength={6}
-              type="password"
-              value={password}
-              onChange={(event) => setPassword(event.target.value)}
-              className="premium-input w-full px-3 py-2.5 text-sm"
-              placeholder="At least 6 characters"
-            />
-          </label>
+            {error && (
+              <div className="p-3 rounded-xl bg-red-50 border border-red-100 text-[11px] text-red-600 font-medium">
+                {error}
+              </div>
+            )}
 
-          {error ? <p className="text-sm text-red-600">{error}</p> : null}
-          {success ? <p className="text-sm text-emerald-600">{success}</p> : null}
+            {success && (
+              <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-100 text-[11px] text-emerald-600 font-medium">
+                {success}
+              </div>
+            )}
 
-          <button
-            type="submit"
-            disabled={submitting}
-            className="w-full rounded-xl bg-ink-900 px-4 py-2.5 text-sm font-semibold text-white shadow-soft transition hover:bg-ink-800 disabled:cursor-not-allowed disabled:opacity-70"
-          >
-            {submitting ? 'Please wait...' : tab === 'login' ? 'Login' : 'Create account'}
-          </button>
-        </form>
+            <button
+              type="submit"
+              disabled={submitting}
+              className="w-full h-[42px] rounded-xl border border-black/10 bg-white text-sm font-bold text-ink-900 shadow-sm hover:bg-zinc-50 disabled:opacity-50 disabled:cursor-not-allowed transition-all transform active:scale-[0.98]"
+            >
+              {submitting ? 'Authenticating...' : 'Sign In'}
+            </button>
+          </form>
+        </div>
+
+        <div className="p-6 border-t border-black/5 bg-zinc-50/50 text-center">
+          <p className="text-[9px] font-bold uppercase tracking-[0.3em] text-zinc-400">
+            Secure Portal
+          </p>
+        </div>
       </div>
     </div>
   );
