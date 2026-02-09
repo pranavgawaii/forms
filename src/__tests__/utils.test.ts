@@ -8,7 +8,6 @@ import {
     toBuilderState,
     buildOptionsPayload
 } from '../lib/utils';
-import { FormFieldRecord, FormRecord } from '../types/forms';
 
 describe('utils', () => {
     describe('cn', () => {

@@ -5,7 +5,7 @@ describe('csv utils', () => {
     it('generates and downloads CSV', () => {
         // Mock DOM elements and URL methods
         const mockURL = { createObjectURL: vi.fn(() => 'blob:url'), revokeObjectURL: vi.fn() };
-        global.URL = mockURL as any;
+        (globalThis as any).URL = mockURL as any;
 
         const mockAnchor = {
             href: '',
@@ -13,7 +13,7 @@ describe('csv utils', () => {
             click: vi.fn(),
             remove: vi.fn()
         };
-        const appendSpy = vi.spyOn(document.body, 'append').mockImplementation(() => { });
+        vi.spyOn(document.body, 'append').mockImplementation(() => { });
         const createElementSpy = vi.spyOn(document, 'createElement').mockReturnValue(mockAnchor as any);
 
         exportResponsesToCsv({
