@@ -568,7 +568,7 @@ const FormBuilderPage = () => {
             </div>
 
             <div className="p-5 border-t border-black/5 bg-zinc-50/50 text-center">
-              <p className="text-[8px] font-bold uppercase tracking-[0.2em] text-zinc-400">MIT ADT University (CN-CRTP)</p>
+              <p className="text-[8px] font-bold uppercase tracking-[0.2em] text-zinc-400">MIT ADT University (CN-CRTP) — Pranav Gawai</p>
             </div>
           </div>
         </div>

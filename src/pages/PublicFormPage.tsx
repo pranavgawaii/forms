@@ -273,7 +273,7 @@ const PublicFormPage = () => {
           </form>
         )}
       </div>
-      <p className="mt-10 mb-10 text-center text-[9px] font-bold uppercase tracking-[0.3em] text-zinc-400">MIT ADT University (CN-CRTP)</p>
+      <p className="mt-10 mb-10 text-center text-[9px] font-bold uppercase tracking-[0.3em] text-zinc-400">MIT ADT University (CN-CRTP) — Pranav Gawai</p>
     </div>
   );
 };
