@@ -141,6 +141,7 @@ export const deleteForm = async (formId: string) => {
 
 const prepareFieldsPayload = (formId: string, fields: EditableField[]) => {
   return fields.map((field, index) => ({
+    ...(field.dbId ? { id: field.dbId } : {}),
     form_id: formId,
     label: field.label,
     field_type: field.fieldType,
