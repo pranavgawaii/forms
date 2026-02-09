@@ -285,7 +285,83 @@ const buildPlacementCoordinatorTemplateFields = (): EditableField[] => [
   },
 ];
 
-export type FormTemplateKey = 'student' | 'placement-coordinator';
+const buildRecruitmentTemplateFields = (): EditableField[] => [
+  {
+    id: createTemplateFieldId(),
+    label: 'Full Name',
+    fieldType: 'short_text',
+    required: true,
+    helpText: '',
+    choices: [],
+  },
+  {
+    id: createTemplateFieldId(),
+    label: 'Email address',
+    fieldType: 'email',
+    required: true,
+    helpText: '',
+    choices: [],
+  },
+  {
+    id: createTemplateFieldId(),
+    label: 'WhatsApp Number',
+    fieldType: 'number',
+    required: true,
+    helpText: '',
+    choices: [],
+    min: 0,
+  },
+  {
+    id: createTemplateFieldId(),
+    label: 'Enrollment Number',
+    fieldType: 'short_text',
+    required: true,
+    helpText: '',
+    choices: [],
+  },
+  {
+    id: createTemplateFieldId(),
+    label: 'Department/Branch',
+    fieldType: 'select',
+    required: true,
+    helpText: '',
+    choices: ['CSE', 'IT', 'ECE', 'ME', 'CE', 'Aero', 'Design', 'Other'],
+  },
+  {
+    id: createTemplateFieldId(),
+    label: 'Current Year of Study',
+    fieldType: 'select',
+    required: true,
+    helpText: '',
+    choices: ['1st Year', '2nd Year', '3rd Year'],
+  },
+  {
+    id: createTemplateFieldId(),
+    label: 'Club Name & Role',
+    fieldType: 'short_text',
+    required: true,
+    helpText: "If you're not from any Club type *NA*",
+    choices: [],
+  },
+  {
+    id: createTemplateFieldId(),
+    label: 'Why do you want to join the Placement Cell?',
+    fieldType: 'long_text',
+    required: true,
+    helpText: 'Describe your motivation and what you aim to achieve.',
+    choices: [],
+  },
+  {
+    id: createTemplateFieldId(),
+    label: 'Relevant Experience',
+    fieldType: 'long_text',
+    required: true,
+    helpText: 'Any previous leadership roles or event management experience.',
+    choices: [],
+  },
+];
+
+export type FormTemplateKey = 'student' | 'placement-coordinator' | 'recruitment';
 
 export interface FormTemplateDefinition {
   key: FormTemplateKey;
@@ -311,6 +387,14 @@ const FORM_TEMPLATE_LIST: Array<FormTemplateDefinition & { buildFields: () => Ed
     description: 'Collect applications for the student placement coordinator team.',
     slug: 'student-placement-coordinator-application',
     buildFields: buildPlacementCoordinatorTemplateFields,
+  },
+  {
+    key: 'recruitment',
+    name: 'Placement Cell Recruitment',
+    title: 'Placement Cell Member Recruitment 2026',
+    description: 'Application form for joining the placement cell coordination team.',
+    slug: 'placement-cell-member-recruitment',
+    buildFields: buildRecruitmentTemplateFields,
   },
 ];
 

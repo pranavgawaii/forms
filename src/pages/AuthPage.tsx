@@ -1,6 +1,6 @@
 import { FormEvent, useState } from 'react';
 import { Navigate } from 'react-router-dom';
-import { supabase } from '../lib/supabase';
+import { supabase } from '@/lib/supabase';
 import { useAuth } from '../context/AuthContext';
 
 const AuthPage = () => {
@@ -61,10 +61,11 @@ const AuthPage = () => {
 
           <form onSubmit={handleLogin} className="space-y-6">
             <div>
-              <label className="block text-[10px] font-bold uppercase tracking-wider text-zinc-500 mb-2 ml-1">
+              <label htmlFor="email" className="block text-[10px] font-bold uppercase tracking-wider text-zinc-500 mb-2 ml-1">
                 Academic Email
               </label>
               <input
+                id="email"
                 required
                 type="email"
                 value={email}
@@ -75,11 +76,12 @@ const AuthPage = () => {
             </div>
 
             <div>
-              <label className="block text-[10px] font-bold uppercase tracking-wider text-zinc-500 mb-2 ml-1">
+              <label htmlFor="password" className="block text-[10px] font-bold uppercase tracking-wider text-zinc-500 mb-2 ml-1">
                 Password
               </label>
               <div className="relative">
                 <input
+                  id="password"
                   required
                   minLength={6}
                   type={showPassword ? 'text' : 'password'}
@@ -91,6 +93,7 @@ const AuthPage = () => {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
+                  aria-label={showPassword ? 'Hide password' : 'Show password'}
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-ink-900 transition-colors"
                 >
                   {showPassword ? (

@@ -213,6 +213,7 @@ const FormBuilderPage = () => {
                 slug: current.id ? current.slug : slugify(title),
               }));
             }}
+            placeholder="Form Title"
             className="premium-input min-w-[220px] flex-1 px-3 py-2 text-lg font-semibold text-ink-900"
           />
 

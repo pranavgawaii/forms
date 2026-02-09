@@ -140,16 +140,24 @@ export const deleteForm = async (formId: string) => {
 };
 
 const prepareFieldsPayload = (formId: string, fields: EditableField[]) => {
-  return fields.map((field, index) => ({
-    ...(field.dbId ? { id: field.dbId } : {}),
-    form_id: formId,
-    label: field.label,
-    field_type: field.fieldType,
-    required: field.fieldType === 'section_title' ? false : field.required,
-    help_text: field.helpText.trim() || null,
-    options: buildOptionsPayload(field),
-    sort_order: index,
-  }));
+  return fields.map((field, index) => {
+    // Ensure we send a valid UUID to the database.
+    // If field.dbId exists, it's an existing record.
+    // Otherwise, if field.id is a local/template placeholder (not a UUID), generate a fresh UUID.
+    const isPlaceholder = field.id.startsWith('local-') || field.id.startsWith('template-');
+    const finalId = field.dbId || (isPlaceholder ? crypto.randomUUID() : field.id);
+
+    return {
+      id: finalId,
+      form_id: formId,
+      label: field.label,
+      field_type: field.fieldType,
+      required: field.fieldType === 'section_title' ? false : field.required,
+      help_text: field.helpText.trim() || null,
+      options: buildOptionsPayload(field),
+      sort_order: index,
+    };
+  });
 };
 
 export const saveFormWithFields = async (state: FormBuilderState) => {

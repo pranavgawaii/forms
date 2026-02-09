@@ -31,7 +31,7 @@ const DynamicField = ({ field, value, onChange, error, disabled = false, readOnl
 
   return (
     <div className="group animate-in fade-in slide-in-from-bottom-2 duration-500">
-      <label className="block text-sm font-semibold text-ink-900 mb-1.5 transition-colors group-focus-within:text-brand-700">
+      <label htmlFor={field.id} className="block text-sm font-semibold text-ink-900 mb-1.5 transition-colors group-focus-within:text-brand-700">
         {field.label}
         {field.required ? <span className="ml-1 text-red-500 font-bold">*</span> : null}
       </label>
@@ -65,6 +65,7 @@ const DynamicField = ({ field, value, onChange, error, disabled = false, readOnl
       {field.field_type === 'number' && (
         <input
           type="number"
+          id={field.id}
           min={typeof field.options?.min === 'number' ? field.options.min : undefined}
           max={typeof field.options?.max === 'number' ? field.options.max : undefined}
           value={typeof value === 'string' || typeof value === 'number' ? value : ''}
@@ -78,6 +79,7 @@ const DynamicField = ({ field, value, onChange, error, disabled = false, readOnl
       {field.field_type === 'date' && (
         <input
           type="date"
+          id={field.id}
           value={typeof value === 'string' ? value : ''}
           onChange={(event) => onChange?.(event.target.value)}
           disabled={disabled}
@@ -88,6 +90,7 @@ const DynamicField = ({ field, value, onChange, error, disabled = false, readOnl
 
       {field.field_type === 'select' && (
         <select
+          id={field.id}
           value={typeof value === 'string' ? value : ''}
           onChange={(event) => onChange?.(event.target.value)}
           disabled={disabled || readOnly}

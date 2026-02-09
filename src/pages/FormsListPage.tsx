@@ -67,15 +67,21 @@ const FormsListPage = () => {
         <h2 className="text-2xl font-bold font-display text-ink-900">Start your first campaign</h2>
         <p className="mt-3 text-ink-500 max-w-md mx-auto">Create beautiful, engaging forms for student applications, feedback, or registrations in minutes.</p>
 
-        <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-          <Link to="/app/forms/new" className="btn-primary w-full sm:w-auto text-center">
+        <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+          <Link to="/app/forms/new" className="btn-primary px-8">
             Create Blank Form
           </Link>
           <Link
-            to="/app/forms/new?template=student"
-            className="btn-secondary w-full sm:w-auto text-center"
+            to="/app/forms/new?template=recruitment"
+            className="btn-secondary px-8 bg-brand-50 border-brand-200 text-brand-700 hover:bg-brand-100"
           >
-            Use Student Template
+            Placement Cell Recruitment
+          </Link>
+          <Link
+            to="/app/forms/new?template=student"
+            className="btn-secondary px-8"
+          >
+            Student Template
           </Link>
         </div>
       </section>
@@ -93,6 +99,28 @@ const FormsListPage = () => {
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
           New Form
         </Link>
+      </div>
+
+      {/* Templates Section at the Top */}
+      <div className="premium-panel bg-brand-50/30 border-brand-100 p-6 rounded-2xl">
+        <h3 className="text-sm font-bold text-ink-900 mb-3 flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-brand-600"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" /><polyline points="14 2 14 8 20 8" /></svg>
+          Quick Start with Templates
+        </h3>
+        <div className="flex flex-wrap gap-3">
+          <Link
+            to="/app/forms/new?template=recruitment"
+            className="rounded-xl bg-brand-600 hover:bg-brand-700 text-white px-5 py-2.5 text-sm font-bold transition-all shadow-sm shadow-brand/20 flex items-center gap-2"
+          >
+            Placement Cell Recruitment
+          </Link>
+          <Link to="/app/forms/new?template=student" className="rounded-xl bg-white border border-black/10 hover:bg-zinc-50 px-5 py-2.5 text-sm font-bold transition-all">
+            Student Template
+          </Link>
+          <Link to="/app/forms/new?template=placement-coordinator" className="rounded-xl bg-white border border-black/10 hover:bg-zinc-50 px-5 py-2.5 text-sm font-bold transition-all">
+            Coordinator Application
+          </Link>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
