@@ -8,6 +8,7 @@ import FormsListPage from './pages/FormsListPage';
 import NotFoundPage from './pages/NotFoundPage';
 import PublicFormPage from './pages/PublicFormPage';
 import ResponsesPage from './pages/ResponsesPage';
+import TestFormsPage from './pages/TestFormsPage';
 
 import ErrorBoundary from './components/ErrorBoundary';
 
@@ -16,6 +17,7 @@ const App = () => {
     <ErrorBoundary>
       <Routes>
         <Route path="/" element={<AuthPage />} />
+        <Route path="/test-forms" element={<TestFormsPage />} />
         <Route path="/auth" element={<Navigate to="/" replace />} />
         <Route path="/f/:slug" element={<PublicFormPage />} />
 
