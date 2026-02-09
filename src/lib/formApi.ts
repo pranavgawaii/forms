@@ -219,7 +219,8 @@ export const saveFormWithFields = async (state: FormBuilderState) => {
 
     const isSlugConflict = insertError.code === '23505';
     if (!isSlugConflict) {
-      throw insertError;
+      console.error('Database Error during form creation:', insertError);
+      throw new Error(`Database error (${insertError.code}): ${insertError.message}`);
     }
 
     lastInsertError = insertError;
