@@ -172,8 +172,8 @@ const PublicFormPage = () => {
   const selectedTheme = getThemeById(form.theme?.preset);
 
   return (
-    <div className="min-h-screen bg-[#fafafa] bg-dotted px-0 sm:px-4 py-0 sm:py-10">
-      <div className="mx-auto max-w-3xl sm:rounded-3xl bg-white shadow-2xl shadow-zinc-200/50 border-x border-b border-black/5 overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-700">
+    <div className="min-h-screen bg-[#fafafa] bg-dotted px-4 sm:px-4 py-6 sm:py-10">
+      <div className="mx-auto max-w-3xl rounded-3xl bg-white shadow-2xl shadow-zinc-200/50 border border-black/5 overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-700">
         {form.status !== 'live' && (
           <div className="bg-zinc-900 px-6 py-2 text-center text-[9px] font-bold uppercase tracking-[0.2em] text-white">
             Form Preview &mdash; {form.status} Mode
@@ -268,7 +268,7 @@ const PublicFormPage = () => {
           </form>
         )}
       </div>
-      <p className="mt-10 mb-10 text-center text-[9px] font-bold uppercase tracking-[0.3em] text-zinc-400">MIT ADT University (CN-CRTP) — Pranav Gawai</p>
+      <p className="mt-10 mb-10 text-center text-[9px] font-bold uppercase tracking-[0.3em] text-zinc-400">MIT ADT University (CN-CRTP)</p>
     </div>
   );
 };

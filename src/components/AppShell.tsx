@@ -92,7 +92,7 @@ const AppShell = () => {
               <span>Log Out</span>
             </button>
             <p className="mt-6 text-center text-[8px] font-bold uppercase tracking-[0.3em] text-zinc-300">
-              MIT ADT — Pranav Gawai
+              MIT ADT
             </p>
           </div>
         </div>
