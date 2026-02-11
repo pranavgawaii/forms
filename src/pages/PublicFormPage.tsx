@@ -2,6 +2,7 @@ import { FormEvent, useMemo, useState } from 'react';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
 import DynamicField from '../components/DynamicField';
+import Countdown from '../components/Countdown';
 import { getPublicFormBySlug, submitPublicResponse } from '../lib/formApi';
 import { getThemeById } from '../lib/themePresets';
 import { cn } from '../lib/utils';
@@ -200,15 +201,18 @@ const PublicFormPage = () => {
                 </p>
               ) : null}
               {form.theme?.deadline && (
-                <div className={cn(
-                  "mt-4 sm:mt-6 inline-flex items-center gap-2 rounded-lg px-3 py-1.5 text-[10px] font-bold border",
-                  selectedTheme.isDark
-                    ? "bg-white/10 text-white border-white/10"
-                    : "bg-zinc-50 text-zinc-500 border-black/5"
-                )}>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                  Due: {new Date(form.theme.deadline).toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' })}
-                </div>
+                <>
+                  <div className={cn(
+                    "mt-4 sm:mt-6 inline-flex items-center gap-2 rounded-lg px-3 py-1.5 text-[10px] font-bold border",
+                    selectedTheme.isDark
+                      ? "bg-white/10 text-white border-white/10"
+                      : "bg-zinc-50 text-zinc-500 border-black/5"
+                  )}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                    Due: {new Date(form.theme.deadline).toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' })}
+                  </div>
+                  <Countdown deadline={form.theme.deadline} isDark={selectedTheme.isDark} />
+                </>
               )}
             </div>
           </div>
